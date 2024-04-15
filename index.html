@@ -1,0 +1,874 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            font-family: 'Cursive', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        header {
+            background-color: rgba(51, 51, 51, 0.8);
+            color: white;
+            padding: 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 2rem;
+            font-family: cursive;
+        }
+
+        nav {
+            display: flex;
+            align-items: center;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            padding: 0.5rem 1rem;
+            display: inline-block;
+            margin-left: 1rem;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+            font-size: 1.2rem;
+            font-family: cursive;
+        }
+
+        nav a:hover {
+            background-color: rgba(119, 119, 119, 0.8);
+        }
+
+        main {
+            padding: 2rem;
+            background-color: rgba(255, 255, 255, 0.9);
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+            position: relative;
+        }
+
+        main::before {
+            content: "";
+            position: absolute;
+            top: -20px;
+            left: -20px;
+            right: -20px;
+            bottom: -20px;
+            background: linear-gradient(to right, #ff6347, #ffa500);
+            z-index: -1;
+            border-radius: 30px;
+            opacity: 0.5;
+        }
+
+        main h2 {
+            margin-top: 0;
+            text-align: left;
+            font-family: cursive;
+            color: #333;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+        }
+
+        footer {
+            background-color: rgba(51, 51, 51, 0.8);
+            color: white;
+            text-align: center;
+            padding: 1rem;
+            font-size: 1.2rem;
+        }
+
+        form {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            grid-gap: 1rem;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: #333;
+            font-weight: bold;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+        }
+
+        input[type="number"],
+        input[type="text"],
+        select {
+            margin-bottom: 1rem;
+            border-radius: 5px;
+            padding: 0.5rem;
+            border: 1px solid #ccc;
+            width: 100%;
+            box-sizing: border-box;
+            box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+        }
+
+        input[type="submit"] {
+            background-color: #4CAF50;
+            color: white;
+            cursor: pointer;
+            padding: 0.8rem;
+            font-size: 1.2rem;
+            border: none;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+            box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+            grid-column: 1 / -1;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #45a049;
+        }
+
+        .result {
+            margin-top: 2rem;
+            font-weight: bold;
+            color: #4CAF50;
+            text-align: center;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+        }
+
+        #intro-page {
+            position: relative;
+            height: 100vh;
+            background-image: url('https://source.unsplash.com/random/1600x900/?heart,health');
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1;
+            animation: fade-in 1s ease-in-out;
+            opacity: 1;
+        }
+
+        @keyframes fade-in {
+            0% {
+                opacity: 0;
+            }
+            100% {
+                opacity: 1;
+            }
+        }
+
+        .animated-text {
+            font-family: 'Cursive', sans-serif;
+            animation: text-animation 3s infinite;
+        }
+
+        @keyframes text-animation {
+            0% {
+                opacity: 0;
+                transform: scale(1);
+            }
+            50% {
+                opacity: 1;
+                transform: scale(1.2);
+            }
+            100% {
+                opacity: 0;
+                transform: scale(1);
+            }
+        }
+
+        .theory-section {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 3rem;
+            max-width: 1200px;
+        }
+
+        .theory-animation {
+            width: 300px;
+            height: 300px;
+            border-radius: 50%;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+            animation: rotate 10s infinite linear;
+            position: relative;
+        }
+
+        .theory-animation::before {
+            content: "";
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 80%;
+            height: 80%;
+            border-radius: 50%;
+            background-color: #f44336;
+            animation: pulse 2s infinite;
+        }
+
+        .theory-animation {
+            width: 300px;
+            height: 300px;
+            background-color: #f44336;
+            border-radius: 50%;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+            animation: pulse 2s infinite;
+        }
+
+        .theory-text {
+            flex: 1;
+            padding: 2rem;
+            text-align: justify;
+        }
+
+        theory-text h2 {
+            font-size: 2.5rem;
+            color: #333;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+
+        .theory-text p {
+            font-size: 1.2rem;
+            line-height: 1.8;
+            color: #555;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+            margin-bottom: 1.5rem;
+        }
+
+        @keyframes rotate {
+            0% {
+                transform: rotate(0deg);
+            }
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        @keyframes pulse {
+            0% {
+                transform: scale(0.8);
+                box-shadow: 0 0 0 0 rgba(244, 67, 54, 0.7);
+            }
+            70% {
+                transform: scale(1);
+                box-shadow: 0 0 0 20px rgba(244, 67, 54, 0);
+            }
+            100% {
+                transform: scale(0.8);
+                box-shadow: 0 0 0 0 rgba(244, 67, 54, 0);
+            }
+        }
+
+
+        footer1 {
+          background-color: #f2f2f2;
+          padding: 2rem;
+          display: flex;
+          justify-content: center;
+        }
+
+        .footer1-content {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          max-width: 800px;
+          text-align: center;
+        }
+
+        .footer1-content p {
+          margin-bottom: 1rem;
+        }
+
+        .footer1-content ul {
+          list-style: none;
+          display: flex;
+          justify-content: center;
+          margin-bottom: 2rem;
+        }
+
+        .footer1-content ul li {
+          margin: 0 1rem;
+        }
+
+        .footer1-content form {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          margin-bottom: 1rem;
+        }
+
+        .footer1-content label {
+          margin-bottom: 0.5rem;
+        }
+
+        .footer1-content input[type="email"] {
+          border: none;
+          padding: 0.5rem;
+          margin-bottom: 1rem;
+          width: 50%;
+        }
+
+        .footer1-content button[type="submit"] {
+          background-color: #ff6347;
+          color: white;
+          padding: 0.5rem 2rem;
+          border: none;
+          cursor: pointer;
+        }
+
+        .footer1-content button[type="submit"]:hover {
+          background-color: #e65136;
+        }
+
+        .icon-email:before,
+          .icon-phone:before {
+            font-size: 18px;
+            color: #333;
+            vertical-align: middle;
+          }
+          .footer1-content ul {
+            list-style: none;
+            padding: 0;
+            display: flex;
+            align-items: center;
+          }
+          .footer1-content ul li {
+            margin-bottom: 0;
+          }
+
+        .text-content {
+            text-align: center;
+            margin-top: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        #scrollToTopBtn {
+          position: fixed;
+          bottom: 20px;
+          right: 20px;
+          width: 20px;
+          height: 20px;
+          background-color: transparent;
+          border: none;
+          cursor: pointer;
+          color: #ccc;  /* Adjust color as needed */
+        }
+
+        #scrollToTopBtn::before {
+          content: "";
+          display: block;
+          width: 100%;
+          height: 100%;
+          transform: rotate(45deg);  /* Rotate to point upwards */
+          border-left: 10px solid currentColor;
+          border-bottom: 10px solid currentColor;
+          padding-right:10px;
+          margin-right: 50px;
+        }
+
+        #scrollToTopBtn:hover {
+          color: #000;
+        }
+
+    </style>
+
+    <title>Heart Disease Predictor</title>
+</head>
+<body>
+    <header>
+        <h1>Heart Disease Predictor</h1>
+        <nav>
+            <a href="#">Home</a>
+            <a href="#theory-section">About Us</a>
+            <a href="#predictor-form">Predictor</a>
+            <a href="#footer-tag">Contact Us</a>
+        </nav>
+    </header>
+
+    <div id="intro-page">
+        <div class="animated-text">Welcome to Heart Disease Predictor</div>
+    </div>
+
+    <div id="theory-section" class="theory-section">
+            <div class="theory-animation"></div>
+            <div class="theory-text">
+                <h2>Understanding Heart Harmony</h2>
+                <p>Heart harmony is a state of balance and well-being where the heart functions optimally, promoting overall health and vitality. Maintaining heart harmony is crucial for preventing and managing heart diseases, which are among the leading causes of death worldwide.</p>
+                <p>Heart diseases can arise from various factors, including genetics, lifestyle choices, and underlying conditions. By understanding the risk factors and adopting healthy habits, individuals can significantly reduce their chances of developing heart-related issues.</p>
+            </div>
+    </div>
+
+        <div class="theory-section">
+            <div class="theory-text">
+                <h2>Risk Factors for Heart Disease</h2>
+                <p>Some of the major risk factors for heart disease include high blood pressure, high cholesterol levels, diabetes, obesity, smoking, excessive alcohol consumption, and a sedentary lifestyle. Addressing these risk factors through lifestyle modifications and medical interventions can greatly improve heart health.</p>
+            </div>
+            <div class="theory-animation"></div>
+        </div>
+
+        <div class="theory-section">
+            <div class="theory-animation"></div>
+            <div class="theory-text">
+                <h2>Promoting Heart Harmony</h2>
+                <p>To promote heart harmony, it is essential to make healthy choices in your daily life. This includes following a balanced and nutritious diet rich in fruits, vegetables, whole grains, and lean proteins. Regular physical activity, such as brisk walking, swimming, or cycling, can also contribute significantly to maintaining a healthy heart.</p>
+                <p>Additionally, managing stress levels and getting adequate sleep are crucial for overall well-being and heart health. Incorporating relaxation techniques like meditation, deep breathing exercises, or yoga can help reduce stress and promote heart harmony.</p>
+            </div>
+        </div>
+
+    <main id="predictor-form">
+        <h2>Predict Your Risk of Heart Disease</h2>
+        <form id="heartDiseaseForm" action="/predict" method="post">
+            <label for="State">State:</label>
+            <select id="State" name="State" required>
+                <option value="" disabled selected>Select</option>
+                <option value="Alabama">Alabama</option>
+                <option value="Alaska">Alaska</option>
+                <option value="Arizona">Arizona</option>
+                <option value="Arkansas">Arkansas</option>
+                <option value="California">California</option>
+                <option value="Colorado">Colorado</option>
+                <option value="Connecticut">Connecticut</option>
+                <option value="Delaware">Delaware</option>
+                <option value="District of Columbia">District of Columbia</option>
+                <option value="Florida">Florida</option>
+                <option value="Georgia">Georgia</option>
+                <option value="Hawaii">Hawaii</option>
+                <option value="Idaho">Idaho</option>
+                <option value="Illinois">Illinois</option>
+                <option value="Indiana">Indiana</option>
+                <option value="Iowa">Iowa</option>
+                <option value="Kansas">Kansas</option>
+                <option value="Kentucky">Kentucky</option>
+                <option value="Louisiana">Louisiana</option>
+                <option value="Maine">Maine</option>
+                <option value="Maryland">Maryland</option>
+                <option value="Massachusetts">Massachusetts</option>
+                <option value="Michigan">Michigan</option>
+                <option value="Minnesota">Minnesota</option>
+                <option value="Mississippi">Mississippi</option>
+                <option value="Missouri">Missouri</option>
+                <option value="Montana">Montana</option>
+                <option value="Nebraska">Nebraska</option>
+                <option value="Nevada">Nevada</option>
+                <option value="New Hampshire">New Hampshire</option>
+                <option value="New Jersey">New Jersey</option>
+                <option value="New Mexico">New Mexico</option>
+                <option value="New York">New York</option>
+                <option value="North Carolina">North Carolina</option>
+                <option value="North Dakota">North Dakota</option>
+                <option value="Ohio">Ohio</option>
+                <option value="Oklahoma">Oklahoma</option>
+                <option value="Oregon">Oregon</option>
+                <option value="Pennsylvania">Pennsylvania</option>
+                <option value="Rhode Island">Rhode Island</option>
+                <option value="South Carolina">South Carolina</option>
+                <option value="South Dakota">South Dakota</option>
+                <option value="Tennessee">Tennessee</option>
+                <option value="Texas">Texas</option>
+                <option value="Utah">Utah</option>
+                <option value="Vermont">Vermont</option>
+                <option value="Virginia">Virginia</option>
+                <option value="Washington">Washington</option>
+                <option value="West Virginia">West Virginia</option>
+                <option value="Wisconsin">Wisconsin</option>
+                <option value="Wyoming">Wyoming</option>
+                <option value="Guam">Guam</option>
+                <option value="Puerto Rico">Puerto Rico</option>
+                <option value="Virgin Islands">Virgin Islands</option>
+            </select>
+
+            <label for="Sex">Gender:</label>
+            <select id="Sex" name="Sex" required>
+                <option value="" disabled selected>Select</option>
+                <option value="Male">Male</option>
+                <option value="Female">Female</option>
+            </select>
+
+            <label for="GeneralHealth">General Health:</label>
+            <select id="GeneralHealth" name="GeneralHealth" required>
+                <option value="" disabled selected>Select</option>
+                <option value="Very Good">Very Good</option>
+                <option value="Good">Good</option>
+                <option value="Excellent">Excellent</option>
+                <option value="Fair">Fair</option>
+                <option value="Poor">Poor</option>
+            </select>
+
+            <label for="PhysicalHealthDays">Physical Health Days:</label>
+            <input type="number" id="PhysicalHealthDays" name="PhysicalHealthDays" required>
+
+            <label for="MentalHealthDays">Mental Health Days:</label>
+            <input type="number" id="MentalHealthDays" name="MentalHealthDays" required>
+
+            <label for="LastCheckupTime">Last Checkup Time:</label>
+            <select id="LastCheckupTime" name="LastCheckupTime" required>
+                <option value="" disabled selected>Select</option>
+                <option value="Within past year (anytime less than 12 months ago)">Within past year (anytime less than 12 months ago)</option>
+                <option value="Within past 2 years (1 year but less than 2 years ago)">Within past 2 years (1 year but less than 2 years ago)od</option>
+                <option value="Within past 5 years (2 years but less than 5 years ago)">Within past 5 years (2 years but less than 5 years ago)</option>
+                <option value="5 or more years ago">5 or more years ago</option>
+            </select>
+
+            <label for="PhysicalActivities">Physical Activities:</label>
+            <select id="PhysicalActivities" name="PhysicalActivities" required>
+                <option value="" disabled selected>Select</option>
+                <option value="Yes">Yes</option>
+                <option value="No">No</option>
+            </select>
+
+            <label for="SleepHours">Sleep Hours:</label>
+            <input type="number" id="SleepHours" name="SleepHours" required>
+
+            <label for="RemovedTeeth">Removed Teeth:</label>
+            <select id="RemovedTeeth" name="RemovedTeeth" required>
+                <option value="" disabled selected>Select</option>
+                <option value="1 to 5">1 to 5</option>
+                <option value="6 or more, but not all">6 or more, but not all</option>
+                <option value="All">All</option>
+                <option value="None of them">None of them</option>
+            </select>
+
+            <label for="HadAngina">Had Angina:</label>
+            <select id="HadAngina" name="HadAngina" required>
+                <option value="" disabled selected>Select</option>
+                <option value="Yes">Yes</option>
+                <option value="No">No</option>
+            </select>
+
+            <label for="HadStroke">Had Stroke:</label>
+            <select id="HadStroke" name="HadStroke" required>
+                <option value="" disabled selected>Select</option>
+                <option value="Yes">Yes</option>
+                <option value="No">No</option>
+            </select>
+
+            <label for="HadAsthma">Had Asthma:</label>
+            <select id="HadAsthma" name="HadAsthma" required>
+                <option value="" disabled selected>Select</option>
+                <option value="Yes">Yes</option>
+                <option value="No">No</option>
+            </select>
+
+            <label for="HadSkinCancer">Had Skin Cancer:</label>
+            <select id="HadSkinCancer" name="HadSkinCancer" required>
+                <option value="" disabled selected>Select</option>
+                <option value="Yes">Yes</option>
+                <option value="No">No</option>
+            </select>
+
+            <label for="HadCOPD">Had COPD:</label>
+            <select id="HadCOPD" name="HadCOPD" required>
+                <option value="" disabled selected>Select</option>
+                <option value="Yes">Yes</option>
+                <option value="No">No</option>
+            </select>
+
+            <label for="HadDepressiveDisorder">Had Depressive Disorder:</label>
+            <select id="HadDepressiveDisorder" name="HadDepressiveDisorder" required>
+                <option value="" disabled selected>Select</option>
+                <option value="Yes">Yes</option>
+                <option value="No">No</option>
+            </select>
+
+            <label for="HadKidneyDisease">Had Kidney Disease:</label>
+            <select id="HadKidneyDisease" name="HadKidneyDisease" required>
+                <option value="" disabled selected>Select</option>
+                <option value="Yes">Yes</option>
+                <option value="No">No</option>
+            </select>
+
+            <label for="HadArthritis">Had Arthritis:</label>
+            <select id="HadArthritis" name="HadArthritis" required>
+                <option value="" disabled selected>Select</option>
+                <option value="Yes">Yes</option>
+                <option value="No">No</option>
+            </select>
+
+            <label for="HadDiabetes">Had Diabetes:</label>
+            <select id="HadDiabetes" name="HadDiabetes" required>
+                <option value="" disabled selected>Select</option>
+                <option value="Yes">Yes</option>
+                <option value="No">No</option>
+                <option value="No, pre-diabetes or borderline diabetes">No, pre-diabetes or borderline diabetes</option>
+                <option value="Yes, but only during pregnancy (female)">Yes, but only during pregnancy (female)</option>
+            </select>
+
+            <label for="DeafOrHardOfHearing">Deaf Or Hard Of Hearing:</label>
+            <select id="DeafOrHardOfHearing" name="DeafOrHardOfHearing" required>
+                <option value="" disabled selected>Select</option>
+                <option value="Yes">Yes</option>
+                <option value="No">No</option>
+            </select>
+
+            <label for="BlindOrVisionDifficulty">Blind Or Vision Difficulty:</label>
+            <select id="BlindOrVisionDifficulty" name="BlindOrVisionDifficulty" required>
+                <option value="" disabled selected>Select</option>
+                <option value="Yes">Yes</option>
+                <option value="No">No</option>
+            </select>
+
+            <label for="DifficultyConcentrating">Difficulty Concentrating:</label>
+            <select id="DifficultyConcentrating" name="DifficultyConcentrating" required>
+                <option value="" disabled selected>Select</option>
+                <option value="Yes">Yes</option>
+                <option value="No">No</option>
+            </select>
+
+            <label for="DifficultyWalking">Difficulty Walking:</label>
+            <select id="DifficultyWalking" name="DifficultyWalking" required>
+                <option value="" disabled selected>Select</option>
+                <option value="Yes">Yes</option>
+                <option value="No">No</option>
+            </select>
+
+            <label for="DifficultyDressingBathing">Difficulty Dressing Bathing:</label>
+            <select id="DifficultyDressingBathing" name="DifficultyDressingBathing" required>
+                <option value="" disabled selected>Select</option>
+                <option value="Yes">Yes</option>
+                <option value="No">No</option>
+            </select>
+
+            <label for="DifficultyErrands">Difficulty Errands:</label>
+            <select id="DifficultyErrands" name="DifficultyErrands" required>
+                <option value="" disabled selected>Select</option>
+                <option value="Yes">Yes</option>
+                <option value="No">No</option>
+            </select>
+
+            <label for="SmokerStatus">Smoker Status:</label>
+            <select id="SmokerStatus" name="SmokerStatus" required>
+                <option value="" disabled selected>Select</option>
+                <option value="Never smoked">Never smoked</option>
+                <option value="Former smoker">Former smoker</option>
+                <option value="Current smoker - now smokes every day">Current smoker - now smokes every day</option>
+                <option value="Current smoker - now smokes some days">Current smoker - now smokes some days</option>
+                <option value="New">New</option>
+            </select>
+
+            <label for="ECigaretteUsage">E Cigarette Usage:</label>
+            <select id="ECigaretteUsage" name="ECigaretteUsage" required>
+                <option value="" disabled selected>Select</option>
+                <option value="Never used e-cigarettes in my entire life">Never used e-cigarettes in my entire life</option>
+                <option value="Not at all (right now)">Not at all (right now)</option>
+                <option value="Use them some days">Use them some days</option>
+                <option value="Use them every day">Use them every day</option>
+            </select>
+
+            <label for="ChestScan">Chest Scan:</label>
+            <select id="ChestScan" name="ChestScan" required>
+                <option value="" disabled selected>Select</option>
+                <option value="Yes">Yes</option>
+                <option value="No">No</option>
+            </select>
+
+            <label for="RaceEthnicityCategory">Race Ethnicity Category:</label>
+            <select id="RaceEthnicityCategory" name="RaceEthnicityCategory" required>
+                <option value="" disabled selected>Select</option>
+                <option value="White only, Non-Hispanic">White only, Non-Hispanic</option>
+                <option value="Hispanic">Hispanic</option>
+                <option value="Black only, Non-Hispanic">Black only, Non-Hispanic</option>
+                <option value="Other race only, Non-Hispanic">Other race only, Non-Hispanic</option>
+                <option value="Multiracial, Non-Hispanic">Multiracial, Non-Hispanic</option>
+            </select>
+
+            <label for="AgeCategory">Age Category:</label>
+            <select id="AgeCategory" name="AgeCategory" required>
+                <option value="" disabled selected>Select</option>
+                <option value="Age 18 to 24">Age 18 to 24</option>
+                <option value="Age 25 to 29">Age 25 to 29</option>
+                <option value="Age 30 to 34">Age 30 to 34</option>
+                <option value="Age 35 to 39">Age 35 to 39</option>
+                <option value="Age 40 to 44">Age 40 to 44</option>
+                <option value="Age 45 to 49">Age 45 to 49</option>
+                <option value="Age 50 to 54">Age 50 to 54</option>
+                <option value="Age 55 to 59">Age 55 to 59</option>
+                <option value="Age 60 to 64">Age 60 to 64</option>
+                <option value="Age 65 to 69">Age 65 to 69</option>
+                <option value="Age 70 to 74">Age 70 to 74</option>
+                <option value="Age 75 to 79">Age 75 to 79</option>
+                <option value="Age 80 or older">Age 80 or older</option>
+            </select>
+
+
+            <label for="HeightInMeters">Height In Meters:</label>
+            <input type="number" id="HeightInMeters" name="HeightInMeters" required>
+
+            <label for="WeightInKilograms">Weight In Kilograms:</label>
+            <input type="number" id="WeightInKilograms" name="WeightInKilograms" required>
+
+            <label for="AlcoholDrinkers">Alcohol Drinkers:</label>
+            <select id="AlcoholDrinkers" name="AlcoholDrinkers" required>
+                <option value="" disabled selected>Select</option>
+                <option value="Yes">Yes</option>
+                <option value="No">No</option>
+            </select>
+
+            <label for="HIVTesting">HIV Testing:</label>
+            <select id="HIVTesting" name="HIVTesting" required>
+                <option value="" disabled selected>Select</option>
+                <option value="Yes">Yes</option>
+                <option value="No">No</option>
+            </select>
+
+            <label for="FluVaxLast12">Flu Vax Last 12:</label>
+            <select id="FluVaxLast12" name="FluVaxLast12" required>
+                <option value="" disabled selected>Select</option>
+                <option value="Yes">Yes</option>
+                <option value="No">No</option>
+            </select>
+
+            <label for="PneumoVaxEver">Pneumo Vax Ever:</label>
+            <select id="PneumoVaxEver" name="PneumoVaxEver" required>
+                <option value="" disabled selected>Select</option>
+                <option value="Yes">Yes</option>
+                <option value="No">No</option>
+            </select>
+
+            <label for="TetanusLast10Tdap">Tetanus Last 10 Tdap:</label>
+            <select id="TetanusLast10Tdap" name="TetanusLast10Tdap" required>
+                <option value="" disabled selected>Select</option>
+                <option value="No, did not receive any tetanus shot in the past 10 years">No, did not receive any tetanus shot in the past 10 years</option>
+                <option value="Yes, received tetanus shot but not sure what type">HispaYes, received tetanus shot but not sure what typenic</option>
+                <option value="Yes, received Tdap">Yes, received Tdap</option>
+                <option value="Yes, received tetanus shot, but not Tdap">Yes, received tetanus shot, but not Tdap</option>
+            </select>
+
+            <label for="HighRiskLastYear">High Risk Last Year:</label>
+            <select id="HighRiskLastYear" name="HighRiskLastYear" required>
+                <option value="" disabled selected>Select</option>
+                <option value="Yes">Yes</option>
+                <option value="No">No</option>
+            </select>
+
+            <label for="CovidPos">Covid Pos:</label>
+            <select id="CovidPos" name="CovidPos" required>
+                <option value="" disabled selected>Select</option>
+                <option value="Yes">Yes</option>
+                <option value="No">No</option>
+                <option value="Tested positive using home test without a health professional">Tested positive using home test without a health professional</option>
+            </select>
+
+            <input type="submit" value="Predict">
+        </form>
+
+        <div class="text-content">
+            <h3>Info About Different Fields</h3>
+            <p>1. State: Geographic location where the individual resides.</p>
+            <p>2. Sex: The biological sex of the individual.</p>
+            <p>3. GeneralHealth: An overall assessment of the individual's health status.</p>
+            <p>4. PhysicalHealthDays: Number of days of poor physical health reported.</p>
+            <p>5. MentalHealthDays: Number of days of poor mental health reported.</p>
+            <p>6. LastCheckupTime: The last time the individual had a medical checkup.</p>
+            <p>7. PhysicalActivities: Indication of physical activity levels.</p>
+            <p>8. SleepHours: Average number of hours the individual sleeps.</p>
+            <p>9. RemovedTeeth: Whether the individual has had teeth removed.</p>
+            <p>10. HadHeartAttack: Whether the individual has had a heart attack.</p>
+            <p>11. HadAngina: Whether the individual has had angina.</p>
+            <p>12. HadStroke: Whether the individual has had a stroke.</p>
+            <p>13. HadAsthma: Whether the individual has asthma.</p>
+            <p>14. HadSkinCancer: Whether the individual has had skin cancer.</p>
+
+            <p>15. HadCOPD: Whether the individual has Chronic Obstructive Pulmonary Disease.</p>
+            <p>16. HadDepressiveDisorder: Whether the individual has been diagnosed with depression.</p>
+            <p>17. HadKidneyDisease: Whether the individual has kidney disease.</p>
+            <p>18. HadArthritis: Whether the individual has arthritis.</p>
+            <p>19. HadDiabetes: Whether the individual has diabetes.</p>
+            <p>20. DeafOrHardOfHearing: Hearing difficulties.</p>
+            <p>21. BlindOrVisionDifficulty: Vision difficulties.</p>
+            <p>22. DifficultyConcentrating: If the individual has difficulty concentrating.</p>
+            <p>23. DifficultyWalking: If the individual has difficulty walking.</p>
+            <p>24. DifficultyDressingBathing: If the individual has difficulty dressing or bathing.</p>
+            <p>25. DifficultyErrands: If the individual has difficulty doing errands alone.</p>
+            <p>26. SmokerStatus: The smoking status of the individual.</p>
+            <p>27. ECigaretteUsage: Usage of electronic cigarettes.</p>
+            <p>28. ChestScan: If the individual has had a chest scan.</p>
+            <p>29. RaceEthnicityCategory: The race/ethnicity of the individual.</p>
+            <p>30. AgeCategory: The age range category of the individual.</p>
+            <p>31. HeightInMeters: The individual's height in meters.</p>
+            <p>32. WeightInKilograms: The individual's weight in kilograms.</p>
+            <p>33. BMI: Body Mass Index.</p>
+            <p>34. AlcoholDrinkers: Alcohol consumption status.</p>
+            <p>35. HIVTesting: If the individual has been tested for HIV.</p>
+            <p>36. FluVaxLast12: If the individual received a flu vaccine in the last 12 months.</p>
+            <p>37. PneumoVaxEver: If the individual ever received a pneumococcal vaccine.</p>
+            <p>38. TetanusLast10Tdap: Status of tetanus and Tdap vaccinations.</p>
+            <p>39. HighRiskLastYear: If the individual was at high risk for certain diseases last year.</p>
+            <p>40. CovidPos: If the individual tested positive for COVID-19.</p>
+        </div>
+
+    </main>
+
+    <footer>
+        &copy; Heart Disease Predictor
+    </footer>
+
+
+    <footer1 id="footer-tag">
+          <div class="footer1-content">
+                <p>Contact Us</p>
+                <ul>
+                  <li class="icon-email"><b>Email: </b><span class="icon-email"><a href="tyagivishu618@gmail.com"> tyagivishu618@gmail.com</a></span></li>
+                  <li><b>Phone:  </b><span class="icon-phone"><a href="+91 9634282051">+91 9634282051</a></span></li>
+                </ul>
+                <p>Heart Harmony Communications</p>
+                <p>Website design and copywriting for Brisbane small businesses, specialising in trades, services & allied health businesses.</p>
+                <p>ABN: 51453609812</p>
+                <button id="scrollToTopBtn"></button>
+          </div>
+    </footer1>
+
+    <script>
+        window.onbeforeunload = function() {
+            window.scrollTo(0, 0);
+        }
+
+        window.addEventListener('load', function() {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+
+        const form = document.getElementById('heartDiseaseForm');
+        const scrollToTopBtn = document.getElementById('scrollToTopBtn');
+
+        form.addEventListener('submit', async (event) => {
+          event.preventDefault();
+
+          const formData = new FormData(form);
+
+          const response = await fetch('/predict', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/x-www-form-urlencoded'
+            },
+            body: new URLSearchParams(formData)
+          });
+
+          const data = await response.text();
+          console.log(data);
+
+          if (response.ok) {
+            const predictionUrl = `/show_results?prediction=${encodeURIComponent(data)}`;
+            window.location.href = predictionUrl;
+          } else {
+            console.error('Error submitting form');
+          }
+        });
+
+        scrollToTopBtn.addEventListener('click', () => {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+
+    </script>
+</body>
+</html>

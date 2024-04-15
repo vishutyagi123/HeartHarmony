@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prediction Results</title>
+    <style>
+        body {
+            font-family: 'Cursive', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-image: url('.venv/src/heart.jpeg');
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: center;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        h1{
+            font-family: cursive;
+            display:flex;
+            margin: 10px;
+        }
+
+        #prediction-section {
+            margin: 1px;
+            font-family: cursive;
+            display: block;
+            background-color: rgba(255, 255, 255, 0.9);
+            padding: 20px;
+            border-radius: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+            max-width: 600px;
+            margin-left: 20px;
+            margin-right: auto;
+        }
+
+        #prediction-section h2 {
+            margin-top: 0;
+            margin-bottom: 20px;
+            font-size: 2rem;
+            color: #333;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+        }
+
+        #prediction-result {
+            font-size: 1.2rem;
+            line-height: 1.5;
+            color: #555;
+        }
+
+        #graph-section {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            font-family: cursive;
+            margin: 20px;
+            background-color: rgba(255, 255, 255, 0.9);
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+        }
+
+        #graph-section h2 {
+            margin-top: 0;
+            margin-bottom: 20px;
+            font-size: 2rem;
+            color: #333;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+        }
+
+        #graph-container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        #graph-caption {
+            margin-top: 20px;
+            font-size: 1.2rem;
+            line-height: 1.5;
+            color: #555;
+            text-align: center;
+        }
+
+        header {
+            background-color: rgba(51, 51, 51, 0.8);
+            color: white;
+            padding: 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 2rem;
+            font-family: cursive;
+        }
+
+        main {
+            padding: 2rem;
+            background-color: rgba(255, 255, 255, 0.9);
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+            position: relative;
+        }
+
+        main::before {
+            content: "";
+            position: absolute;
+            top: -20px;
+            left: -20px;
+            right: -20px;
+            bottom: -20px;
+            background: linear-gradient(to right, #ff6347, #ffa500);
+            z-index: -1;
+            border-radius: 30px;
+            opacity: 0.5;
+        }
+
+        main h2 {
+            margin-top: 0;
+            text-align: left;
+            font-family: cursive;
+            color: #333;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+        }
+
+        footer {
+            background-color: rgba(51, 51, 51, 0.8);
+            color: white;
+            text-align: center;
+            padding: 1rem;
+            font-size: 1.2rem;
+        }
+
+        #feedback-sidebar {
+            position: fixed;
+            top: 30%;
+            right: 45px;
+            z-index: 999;
+            background-color: #333;
+            border-radius: 5px 0 0 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+            display: flex;
+        }
+
+        #feedback-btn{
+            position: fixed;
+            top: 80%;
+            right: -25px;
+            transform: rotate(90deg);
+            background-color: #333;
+            border-radius: 5px 0 0 5px;
+            z-index: 999;
+            display: flex;
+        }
+
+        #feedback-sidebar a {
+            display: block;
+            color: #fff;
+            text-decoration: none;
+            padding: 10px;
+            transition: background-color 0.3s ease;
+        }
+
+        #feedback-sidebar a:hover {
+            background-color: #555;
+        }
+
+        .feedback-form {
+            display: none;
+            background-color: #f9f9f9;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+        }
+
+        .feedback-form h2 {
+            color: #333;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .feedback-form label {
+            display: block;
+            margin-bottom: 5px;
+            color: #555;
+        }
+
+        .feedback-form input,
+        .feedback-form textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+            margin-bottom: 15px;
+            box-sizing: border-box;
+        }
+
+        .feedback-form button[type="submit"] {
+            background-color: #4CAF50;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .feedback-form button[type="submit"]:hover {
+            background-color: #45a049;
+        }
+
+        .feedback-form.show {
+            display: block;
+        }
+
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        .close:hover,
+        .close:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Heart Disease Prediction Results</h1>
+    </header>
+
+    <main>
+        <section id="prediction-section">
+            <h2 id="prediction">Prediction</h2>
+            <p id="prediction-result">{{ prediction }}</p>
+        </section>
+
+        <section id="graph-section">
+            <h2>Heart Harmony Trends</h2>
+            <div id="graph-container">
+                <div class='tableauPlaceholder' id='viz1713092580058' style='position: relative'>
+                    <noscript><a href='#'><img alt='Heart Harmony' src='https:&#47;&#47;public.tableau.com&#47;static&#47;images&#47;Pa&#47;PackedBubblechartandfunnelchartandothercharts&#47;Heart Harmony&#47;1_rss.png' style='border: none' /></a></noscript>
+                    <object class='tableauViz'  style='display:none;'>
+                        <param name='host_url' value='https%3A%2F%2Fpublic.tableau.com%2F' /> <param name='embed_code_version' value='3' /> <param name='site_root' value='' />
+                        <param name='name' value='PackedBubblechartandfunnelchartandothercharts&#47;Heart_Harmony' /><param name='tabs' value='no' /><param name='toolbar' value='yes' />
+                        <param name='static_image' value='https:&#47;&#47;public.tableau.com&#47;static&#47;images&#47;Pa&#47;PackedBubblechartandfunnelchartandothercharts&#47;Heart_Harmony&#47;1.png' />
+                        <param name='animate_transition' value='yes' /><param name='display_static_image' value='yes' /><param name='display_spinner' value='yes' />
+                        <param name='display_overlay' value='yes' /><param name='display_count' value='yes' /><param name='language' value='en-US' /><param name='filter' value='publish=yes' /></object>
+                </div>
+            </div>
+            <div id="graph-caption">
+                <p>This graph showcases the relationship between various factors and the likelihood of heart disease. Explore the interactive visualization to gain insights into maintaining heart harmony.</p>
+            </div>
+        </section>
+
+        <div id="feedback-sidebar">
+            <a href="#" id="feedback-btn">Feedback</a>
+            <div class="feedback-form" id="feedback-form">
+                <span class="close">&times;</span>
+                <h2>Feedback</h2>
+                <form>
+                    <label for="name">Name:</label>
+                    <input type="text" id="name" name="name" required>
+
+                    <label for="email">Email:</label>
+                    <input type="email" id="email" name="email" required>
+
+                    <label for="feedback-message">Message:</label>
+                    <textarea id="feedback-message" name="feedback-message" required></textarea>
+
+                    <button type="submit">Submit</button>
+                </form>
+            </div>
+        </div>
+
+        <script type='text/javascript'>
+            var divElement = document.getElementById('viz1713092580058');
+            var vizElement = divElement.getElementsByTagName('object')[0];
+            vizElement.style.width='100%';vizElement.style.height=(divElement.offsetWidth*0.75)+'px';
+            var scriptElement = document.createElement('script');
+            scriptElement.src = 'https://public.tableau.com/javascripts/api/viz_v1.js';
+            vizElement.parentNode.insertBefore(scriptElement, vizElement);
+        </script>
+    </main>
+
+    <footer>
+        &copy; Heart Disease Predictor
+    </footer>
+
+    <script type='text/javascript'>
+
+        var divElement = document.getElementById('viz1713092580058');
+        var vizElement = divElement.getElementsByTagName('object')[0];
+        vizElement.style.width='100%';vizElement.style.height=(divElement.offsetWidth*0.75)+'px';
+        var scriptElement = document.createElement('script');
+        scriptElement.src = 'https://public.tableau.com/javascripts/api/viz_v1.js';
+        vizElement.parentNode.insertBefore(scriptElement, vizElement);
+
+
+        const predictionResult = document.getElementById("prediction-result");
+        const graphContainer = document.getElementById("graph-container");
+
+        // Fetch the prediction result and graph data from your server
+<!--        fetch("/predict")-->
+<!--            .then(response => response.json())-->
+<!--            .then(data => {-->
+<!--                predictionResult.textContent = data.prediction;-->
+<!--            })-->
+<!--            .catch(error => {-->
+<!--                console.error("Error fetching prediction results:", error);-->
+<!--                predictionResult.textContent = "An error occurred while fetching the prediction results.";-->
+<!--            });-->
+
+        const feedbackBtn = document.getElementById('feedback-btn');
+        const feedbackForm = document.getElementById('feedback-form');
+        const closeBtn = feedbackForm.querySelector('.close');
+        const thankYouMessage = document.createElement('div');
+
+        feedbackBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            feedbackForm.classList.toggle('show');
+        });
+
+        closeBtn.addEventListener('click', function() {
+            feedbackForm.classList.remove('show');
+        });
+
+        const feedbackFormElement = feedbackForm.querySelector('form');
+        feedbackFormElement.addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            thankYouMessage.textContent = 'Thank you for your valuable feedback!';
+            thankYouMessage.style.color = 'green';
+            thankYouMessage.style.textAlign = 'center';
+            thankYouMessage.style.marginTop = '20px';
+
+            feedbackForm.appendChild(thankYouMessage);
+
+            setTimeout(function() {
+                feedbackFormElement.reset();
+                thankYouMessage.remove();
+            }, 3000);
+        });
+    </script>
+</body>
+</html>
